@@ -21,3 +21,5 @@ Ex 1.16 - Design an iterative exponentiation procedure
 Ex 1.17 - Design a recursive multiplication procedure
 
 Ex 1.18 - Modify 1.17 to implement an iterative multiplication procedure
+
+Ex 1.19 - Complete an iterative fibonacci procedure allowing for a logarithmic no. of steps
