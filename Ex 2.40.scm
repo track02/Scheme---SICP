@@ -1,9 +1,5 @@
 #lang scheme
 
-;Ex 2.40 Write a procedure unique-pairs which when given an integer, n generates the
-;sequence of pairs (i, j) with 1 <= j < i <= n
-
-
 ;Accumulate
 (define (accumulate op initial sequence)
    (if (null? sequence)
@@ -64,3 +60,34 @@
                   (map (lambda (j) (list i j)) ;join it with all values below it (j)
                        (enumerate-interval 1 (- i 1)))) ;created by enumerating from 1 to (i - 1)
                 (enumerate-interval 1 n)))))
+
+;Ex 2.40 Write a procedure unique-pairs which when given an integer, n generates the
+;sequence of pairs (i, j) with 1 <= j < i <= n
+(define (unique-pairs n)
+  (flatmap ;
+   (lambda (i)  ;For each element (i) from the list 1 to n
+     (map (lambda (j) (list i j)) ;Map (list i j) seq, where seq is the list 1 to i-1
+          (enumerate-interval 1 (- i 1))))
+   (enumerate-interval 1 n))) ;Using a base sequence of 1 to n
+
+;Testing
+;> (unique-pairs 3)
+;((2 1) (3 1) (3 2))
+;> (unique-pairs 4)
+;((2 1) (3 1) (3 2) (4 1) (4 2) (4 3))
+
+;Use unique-pairs to simplify the prime-sum-pairs procedure
+;Combining flatmap / enumerate produce all pairings (i,j) such that
+; j<i<=n and j + i = prime
+(define (simple-prime-sum-pairs n)
+
+  ;Creates (car, cdr, car+cdr) lists for 
+  (map make-pair-sum
+       (filter prime-sum? ;the filtered prime-sum pairs produced by
+               (unique-pairs n))))
+
+;Testing
+;> (prime-sum-pairs 4)
+;((2 1 3) (3 2 5) (4 1 5) (4 3 7))
+;> (simple-prime-sum-pairs 4)
+;((2 1 3) (3 2 5) (4 1 5) (4 3 7))
