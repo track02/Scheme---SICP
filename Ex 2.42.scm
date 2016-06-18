@@ -31,7 +31,7 @@
 
 
 ;Ex 2.42
-;Implement a representation for sets fo board positions
+;A) Implement a representation for sets of board positions
 
 ;Write a procedure adjoin-position adds a new position to an existing set
 ;Define empty-board which represents an empty set of positions
@@ -41,16 +41,32 @@
 
 ;Note: we only need to check whether the newly added queen is safe
 
-(define (queens board-size)
-  (define (queen-cols k)  
-    (if (= k 0)
-        (list empty-board)
-        (filter
-         (lambda (positions) (safe? k positions))
-         (flatmap
-          (lambda (rest-of-queens)
-            (map (lambda (new-row)
-                   (adjoin-position new-row k rest-of-queens))
-                 (enumerate-interval 1 board-size)))
-          (queen-cols (- k 1))))))
-  (queen-cols board-size))
+;A) Representation for board position
+;A position consists of a column and row number -> pair
+
+;Constructor
+(define (position col row)
+  (list col row))
+
+;Selectors
+(define (position-column position)
+  (car position))
+
+(define (position-row position)
+  (cadr position))
+
+
+
+;(define (queens board-size)
+;  (define (queen-cols k)  
+;    (if (= k 0)
+;        (list empty-board)
+;        (filter
+;        (lambda (positions) (safe? k positions))
+;         (flatmap
+;          (lambda (rest-of-queens)
+;            (map (lambda (new-row)
+;                   (adjoin-position new-row k rest-of-queens))
+;                 (enumerate-interval 1 board-size)))
+;          (queen-cols (- k 1))))))
+;  (queen-cols board-size))
