@@ -46,15 +46,18 @@
 
 ;Constructor
 (define (position col row)
-  (list col row))
+  (cons col row))
 
 ;Selectors
 (define (position-column position)
   (car position))
 
 (define (position-row position)
-  (cadr position))
+  (cdr position))
 
+;Adjoin-position, adds a new position to an existing set
+(define (adjoin-position position-set new-position)
+  (cons positions (list new-position)))
 
 
 ;(define (queens board-size)
