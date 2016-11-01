@@ -1,1 +1,1 @@
-Solutions to coding exercises from Structure and Interpretation of Computer Programs
+Solutions to  exercises from Structure and Interpretation of Computer Programs (SICP)
