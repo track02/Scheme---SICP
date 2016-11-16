@@ -73,7 +73,7 @@ In order to evaluate a combination the following rule is used:
 This is a recursive rule, as in order to evaluate a combination we must first evaluate each element of the combination.
 
 There are exceptions to this rule known as special forms which have their own unique evaluation rules.
-`define` is one example as `(define y 4)` does not apply 'define to the two arguments.
+`define` is one example as `(define y 4)` does not apply `define` to the two arguments.
 Instead 'define associates `y` with `4`
 
 
