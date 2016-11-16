@@ -17,17 +17,21 @@ There are three key mechanisms for accomplishing this:
 The interpreter evaluates a given expression and returns the result of the evaluation.
 
 `> 500`
+
 `  500`
 
 Expressions may be combined using another expression representing a primitive procedure, this forms a compound expression.
 
 `> (+ 5 10)`
+
 `  15`
 
 `> (* 3 6)`
+
 `  18`
   
 `> (- 10 5 3)`
+
 `  2`
 
 Expressions formed in this manner are called combinations.
@@ -46,9 +50,13 @@ In Scheme, we name objects using `define`.
 Once a name has been associated with a value that value can be referred to by name.
 
 `> (define size 2)`
+
 `> size`
+
 `  2`
+
 `> (* 5 size)`
+
 `  10`
 
 Associating values with symbols requires that the interpreter maintains some memory in order to keep track of
