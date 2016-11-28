@@ -11,7 +11,6 @@
 ;and make the operations on term lists generic. Redesign the polynomial system to implement this
 ;generalization. This is a major effort, not a local change.
 
-
 ;The two term-list representations could each be contained within a package
 ;With a tag being used to identify the implementation
 
@@ -104,6 +103,14 @@
 ;Tag Operations
 (define (attach-tag tag-name p)
   (list tag-name p))
+(define (type-tag datum)
+  (if (pair? datum)
+      (car datum)
+      (error "Bad tagged datum -- TYPE-TAG" datum)))
+(define (contents datum)
+  (if (pair? datum)
+      (cdr datum)
+      (error "Bad tagged datum -- CONTENTS" datum)))
 
 ;Implementation of get/put  - allows for testing
 (define *op-table* (make-hash))
@@ -115,10 +122,16 @@
   (hash-ref *op-table* (list op type) '()))
 
 
-
 ;Simple Implementation of apply-generic
 ;No coercion present, will only use integers for coefficients / orders
-(define (apply-generic op arg) (arg op))
+(define (apply-generic op . args)
+  (let ((type-tags (map type-tag args)))
+    (let ((proc (get op type-tags)))
+      (if proc
+          (apply proc (map contents args))
+          (error
+            "No method for these types -- APPLY-GENERIC"
+            (list op type-tags))))))
 
 ;We'll assume the number packages are already installed, allowing generic add/mul/=zero?
 ;Use dummy methods for now and will stick to integers to keep things simple
@@ -132,7 +145,10 @@
   (= 0 x))
 
 (define (make-poly coeff term-list)
-  (apply-generic 'make 'poly)
+  ((get 'make 'polynomial) coeff term-list))
 
+(install-polynomial-package)
+(define p1 (make-poly 'x '((1 2) (3 0))))
+(define p2 (make-poly 'x '((2 2) (4 0))))
 
 
