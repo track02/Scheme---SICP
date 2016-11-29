@@ -56,10 +56,10 @@
         (else
          (let ((t1 (first-term L1)) (t2 (first-term L2)))
            (cond ((> (order t1) (order t2))
-                  (adjoin-term
+                  (adjoin-term ;Apply generic here
                    t1 (add-terms (rest-terms L1) L2)))
                  ((< (order t1) (order t2))
-                  (adjoin-term
+                  (adjoin-term ;Apply generic here
                    t2 (add-terms L1 (rest-terms L2))))
                  (else
                   (adjoin-term
@@ -85,8 +85,8 @@
          (mul-term-by-all-terms t1 (rest-terms L))))))
 
 
-;Term-List Operations
-(define (adjoin-term term term-list)
+;Term-List Operations Sparse
+(define (adjoin-term-sparse term term-list)
   (if (=zero? (coeff term))
       term-list
       (cons term term-list)))
@@ -94,6 +94,26 @@
 (define (first-term term-list) (car term-list))
 (define (rest-terms term-list) (cdr term-list))
 (define (empty-termlist? term-list) (null? term-list))
+
+
+;Term-List Operations Dense
+(define (adjoin-term-dense term term-list)
+  (if (> (term-order term) (length term-list))
+      ;If order of term is greater than length of term list, create a list padded with zeros and append term-list
+      (append (create-zeroes (term-coefficient term) (- (term-order term) (length term-list))) term-list)
+      ;Else update term list by adding coefficient to correct position
+      (update-coeff '() (term-coefficient term) term-list (- (-(length term-list) 1) (term-order term)))))
+
+
+(define (create-zeroes value zerocount)
+  (if (= zerocount 0)
+      (cons value '())
+      (cons value (create-zeroes 0 (- zerocount 1)))))
+
+(define (update-coeff prev-elements value next-elements i)
+  (if (= 0 i)
+      (append prev-elements (list (+ value (car next-elements))) (cdr next-elements))
+      (update-coeff (append prev-elements (list (car next-elements))) value (cdr next-elements) (- i 1))))
 
 ;Term operations
 (define (make-term order coeff) (list order coeff))
