@@ -20,6 +20,34 @@
 ;This would allow the polynomial package to remain unchanged as only the underlying term-list representations
 ;would need to be updated
 
+
+
+;ToDo
+;
+;
+;Create term-list packages for sparse/dense term list
+;
+;Create generic procedures for term-list operations
+;
+;Following term-list procedures required generically / type-specific
+; - empty-termlist?
+; - first-term
+; - rest-terms
+; - adjoin-term
+; - mul-term-by-all-terms
+; - mul-terms
+;
+;Polynomials are to be built using a coefficient ('x) and a termlist either sparse or dense
+;When a polynomials term-list is to be operated upon, the correct procedure will be dispatched
+;via a call to apply-generic
+;
+;Ultimately want to test
+;Add/Mul polynomials of the same term-list
+;Add/Mul polynomials of two different term-lists
+
+
+
+
 ;Current Polynomial Package
 
 (define (install-polynomial-package)
