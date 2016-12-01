@@ -49,7 +49,6 @@
 
 
 ;Current Polynomial Package
-
 (define (install-polynomial-package)
 ;; internal procedures
 ;; representation of poly
@@ -198,5 +197,5 @@
 (install-polynomial-package)
 (define p1 (make-poly 'x '((1 2) (3 0))))
 (define p2 (make-poly 'x '((2 2) (4 0))))
-
+(define p3 (make-poly 'x '(0 0 2 3 4)))
 
