@@ -24,7 +24,6 @@
 
 ;ToDo
 ;
-;
 ;Create term-list packages for sparse/dense term list
 ;
 ;Create generic procedures for term-list operations
@@ -49,13 +48,32 @@
 ;Sparse term-list package
 (define (install-sparse-term-list-package)
 
-
+  (define (tag tl) (attach-tag 'sparse-term-list tl))
+  (define (adjoin-term-sparse term term-list)
+  (if (=zero? (coeff term))
+      term-list
+      (cons term term-list)))
+  (define (the-empty-termlist) '())
+  (define (first-term term-list) (car term-list))
+  (define (rest-terms term-list) (cdr term-list))
+  (define (empty-termlist? term-list) (null? term-list))
+  
 'done)
 
 
 ;Dense term-list package
 (define (install-dense-term-list-package)
 
+  ;Term-List Operations Dense
+(define (adjoin-term-dense term term-list)
+  (if (> (order term) (length term-list))
+      ;If order of term is greater than length of term list, create a list padded with zeros and append term-list
+      (append (create-zeroes (coeff term) (- (order term) (length term-list))) term-list)
+      ;Else update term list by adding coefficient to correct position
+      (update-coeff '() (coeff term) term-list (- (-(length term-list) 1) (order term)))))
+
+  (define (tag tl) (attach-tag 'dense-term-list tl))
+  
   'done)
 
 
@@ -88,6 +106,13 @@
   (put 'make 'polynomial
        (lambda (var terms) (tag (make-poly var terms))))
   'done)
+
+
+
+;Generic Term-List Operations
+(define (adjoin-term termlist term)
+  (apply-generic 'adjoin-term termlist term))
+
 
 ;Add two term lists together
 (define (add-terms L1 L2)
@@ -136,13 +161,7 @@
 (define (empty-termlist? term-list) (null? term-list))
 
 
-;Term-List Operations Dense
-(define (adjoin-term-dense term term-list)
-  (if (> (term-order term) (length term-list))
-      ;If order of term is greater than length of term list, create a list padded with zeros and append term-list
-      (append (create-zeroes (term-coefficient term) (- (term-order term) (length term-list))) term-list)
-      ;Else update term list by adding coefficient to correct position
-      (update-coeff '() (term-coefficient term) term-list (- (-(length term-list) 1) (term-order term)))))
+
 
 
 (define (create-zeroes value zerocount)
@@ -192,6 +211,8 @@
           (error
             "No method for these types -- APPLY-GENERIC"
             (list op type-tags))))))
+
+
 
 ;We'll assume the number packages are already installed, allowing generic add/mul/=zero?
 ;Use dummy methods for now and will stick to integers to keep things simple
