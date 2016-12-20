@@ -77,7 +77,19 @@ There are exceptions to this rule known as special forms which have their own un
 Instead 'define associates `y` with `4`
 
 
+1.1.4) Compound Procedures
 
+Procedure Definition is an abstraction technique in which a compound operation can be named and referred to as a unit.
 
+The general form of a Procedure Definition is as follows:
 
+`(define (<name> <formal parameters>) <body>)`
 
+For example, the compound procedure cube represents the operation of multiplying a value by itself twice:
+
+`(define (cube x) (* x x x))`
+
+Compound procedures are used in exactly the same way as primitive procedures:
+
+`> (cube 3)`
+`27`
