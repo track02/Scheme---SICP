@@ -92,4 +92,5 @@ For example, the compound procedure cube represents the operation of multiplying
 Compound procedures are used in exactly the same way as primitive procedures:
 
 `> (cube 3)`
+
 `27`
