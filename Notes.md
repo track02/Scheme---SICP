@@ -1,7 +1,12 @@
 
 Brief notes for each Chapter/Section.
 
-1.1) Elements of Programming
+
+
+
+
+
+##1.1) Elements of Programming
 
 A programming language serves as a framework in which to organise ideas about processes 
 and offers the means to combine simple ideas in order to form more complex ideas.
@@ -12,7 +17,7 @@ There are three key mechanisms for accomplishing this:
 - Means of Abstraction, by which compound elements can be named and manipulated as units.
 
 
-1.1.1) Expressions
+###1.1.1) Expressions
 
 The interpreter evaluates a given expression and returns the result of the evaluation.
 
@@ -42,7 +47,7 @@ values of the operands (arguments).
 
 Placing the operator to the left of it's operands is known as prefix notation.
 
-1.1.2) Naming and the Evironment
+###1.1.2) Naming and the Evironment
 
 A name can be used to identify a variable whose value is the object.
 
@@ -62,7 +67,7 @@ Once a name has been associated with a value that value can be referred to by na
 Associating values with symbols requires that the interpreter maintains some memory in order to keep track of
 the name-object pairings, this memory is known as the global environment.
  
-1.1.3) Evaluating Combinations
+###1.1.3) Evaluating Combinations
 
 In order to evaluate a combination the following rule is used:
 
@@ -77,7 +82,7 @@ There are exceptions to this rule known as special forms which have their own un
 Instead 'define associates `y` with `4`
 
 
-1.1.4) Compound Procedures
+###1.1.4) Compound Procedures
 
 Procedure Definition is an abstraction technique in which a compound operation can be named and referred to as a unit.
 
