@@ -47,17 +47,19 @@
 
 ;Sparse term-list package
 (define (install-sparse-term-list-package)
-
+  (define (make-sparse-term-list term-list) (tag term-list))
   (define (tag tl) (attach-tag 'sparse-term-list tl))
   (define (adjoin-term-sparse term term-list)
   (if (=zero? (coeff term))
       term-list
       (cons term term-list)))
+  
   (define (the-empty-termlist) '())
   (define (first-term term-list) (car term-list))
   (define (rest-terms term-list) (cdr term-list))
   (define (empty-termlist? term-list) (null? term-list))
-  
+
+  (put 'adjoin '(sparse-term-list term) (lambda (term term-list) (adjoin-term-sparse term term-list)))
 'done)
 
 
@@ -108,10 +110,31 @@
   'done)
 
 
+;Term package
+(define (install-term-package)
+  ;Term operations
+  (define (make-term order coeff) (list order coeff))
+  (define (order term) (car term))
+  (define (coeff term) (cadr term))
+  (define (tag p) (attach-tag 'term p))
+  (put 'make 'term (lambda (order coeff) (tag (make-term order coeff))))
+  (put 'order '(term) (lambda (term) (order term)))
+  (put 'coeff '(term) (lambda (term) (coeff term)))
+  'done)
 
-;Generic Term-List Operations
+  
+
+;Generic Operations
 (define (adjoin-term termlist term)
   (apply-generic 'adjoin-term termlist term))
+(define (order term)
+  (apply-generic'order term))
+(define (coeff term)
+  (apply-generic 'coeff term))
+(define (make-term order coeff)
+  ((get 'make 'term) order coeff))
+(define (make-poly coeff term-list)
+  ((get 'make 'polynomial) coeff term-list))
 
 
 ;Add two term lists together
@@ -174,10 +197,7 @@
       (append prev-elements (list (+ value (car next-elements))) (cdr next-elements))
       (update-coeff (append prev-elements (list (car next-elements))) value (cdr next-elements) (- i 1))))
 
-;Term operations
-(define (make-term order coeff) (list order coeff))
-(define (order term) (car term))
-(define (coeff term) (cadr term))
+
 
 ;Tag Operations
 (define (attach-tag tag-name p)
@@ -188,7 +208,7 @@
       (error "Bad tagged datum -- TYPE-TAG" datum)))
 (define (contents datum)
   (if (pair? datum)
-      (cdr datum)
+      (cadr datum)
       (error "Bad tagged datum -- CONTENTS" datum)))
 
 ;Implementation of get/put  - allows for testing
@@ -225,10 +245,10 @@
 (define (=zero? x)
   (= 0 x))
 
-(define (make-poly coeff term-list)
-  ((get 'make 'polynomial) coeff term-list))
+
 
 (install-polynomial-package)
+(install-term-package)
 (define p1 (make-poly 'x '((1 2) (3 0))))
 (define p2 (make-poly 'x '((2 2) (4 0))))
 
