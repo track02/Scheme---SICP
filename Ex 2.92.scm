@@ -53,8 +53,13 @@
   
 
 ;Using this coerce procedure we can now define add/multiply procedures
+;Note on comparisons
+; Use = to test whether two numbers are equivalent
+; Use eqv? to test whether two non-numeric values are equivalent
+; Use equal? to test whether two lists, vectors, etc are equivalent
+; Use eq? to test whether two arguments point to the same object
 (define (add-poly p1 p2)
-  (if (eq? (variable p1) (variable p2))
+  (if (eqv? (variable p1) (variable p2))
       ;Both variables equal - add as normal where add is a generic procedure
       (make-poly (variable p1) (add (term-list p1) (term-list p2)))
       ;Otherwise find which polynomial has the 'greater' variable
@@ -64,7 +69,7 @@
                     
 ;Using a similar structure for multiply
 (define (multiply-poly p1 p2)
-  (if (eq? (variable p1) (variable p2))
+  (if (eqv? (variable p1) (variable p2))
       ;Both variables equal - add as normal where add is a generic procedure
       (make-poly (variable p1) (multiply (term-list p1) (term-list p2)))
       ;Otherwise find which polynomial has the 'greater' variable
