@@ -12,7 +12,7 @@
 ;This factor is chosen to guarantee that no fractions will arise during the division process.
 ;
 ;This factor will cause our final answer to differn from the actual GCD by an integer constant factor, but this doesn't matte when
-;reducing rational functions to lowest terms.
+;reducing rational functions to ltraceowest terms.
 ;
 ;
 ;If P and Q are polynomials, lets O1 be the order of P (that is the order of the largest term of P) and let O2 be
@@ -78,6 +78,9 @@
 ;        ;a is our set of results
 ;        (let* ((coeffs (map cadr a)) ;Extract all coefficients, result of mapping cadr to each term ;Note - using let* allows referencing previous bindings
 ;              (coeff-gcd (apply gcd coeffs))) ;Find the gcd for this list, use apply to call gcd on all list elements at once (gcd 1 2 3 4) -> (apply gcd '(1 2 3 4))
-;          (map (lambda (t) (make-term (order t) ((coeff t) / gcd))) a)) ;divide each term by the gcd and return new list
+;          (map (lambda (t) (make-term (order t) (/ (coeff t) coeff-gcd))) a)) ;for each term, divide coeff by the gcd and make a new term - return list
 ;        (gcd-terms b (pseudoremainder-terms a b)))) ;Otherwise repeat process
 
+;Removed a factor of 1458 from q3
+;> q3
+;{polynomial x sparse {2 1} {1 -2} {0 1}}
