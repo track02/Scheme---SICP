@@ -10,9 +10,8 @@
 ;(rand 'generate) producesa new random number
 ; ((rand 'reset) ⟨new-value ⟩) resets the internal state variable to the designated ⟨new-value ⟩.
 
-;us, by reseing the state, one can generate repeatable sequences.
-;ese are very handy to have when testing and
-;debugging programs that use random numbers.
+;Thus, by resetting the state, one can generate repeatable sequences.
+;These are very handy to have when testing and debugging programs that use random numbers.
 
 (define (rand start-value)
   (let ((value start-value))
