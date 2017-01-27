@@ -1,5 +1,6 @@
 #lang scheme
 
+;Exercise 1.37 (Part A)
 ;A continuous fraction has the form
 ;f = N1 / D1 + N2 / D2 + N3 / D3 + ...
 ;Truncating the expansion after a given number of terms
@@ -18,13 +19,9 @@
         (/ (n i) (d i))))
   (divide 1))
   
-
 ;Test the procedure by evaluating:
-;
 ;(cont-frac (lambda (i) 1.0)
 ;            (lambda (i) 1.0)
 ;            5)
 
-; >>> 0.625 (1 / golden ratio)
-
-  
+; >>> 0.625 (1 / golden ratio)  
