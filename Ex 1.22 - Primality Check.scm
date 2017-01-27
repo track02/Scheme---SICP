@@ -1,5 +1,16 @@
 #lang scheme
 
+;Exercise 1.22 Most Lisp implementations include a primitive
+;called runtime that returns an integer that specifies the amount of time the system has been running 
+;(measured, for example, in microseconds). 
+
+;The following timedprime-test procedure, when called with an integer n, prints n and checks to see if n is prime.
+;If n is prime, the procedure prints three asterisks followed by the amount of time used in performing the test.
+
+;Using this procedure, write a procedure search-for-primes 
+;that checks the primality of consecutive odd integers in a specified range.
+
+
 ;Write a function that finds the first 3 primes numbers starting from a given value
 
 ; Displays input and begins prime test
