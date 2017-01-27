@@ -1,10 +1,20 @@
 #lang scheme
 
-; Ex 1.31 - Write a procedure similar  sum called product
-; product should return the product of the values of a function at points over a given range
+;Exercise 1.31:
+;A. The sum procedure is only the simplest of a vast number
+;of similar abstractions that can be captured as higher-order procedures.
 
-; Define factorial in the terms of product
+;Write an analogous procedure called product that returns the product of the values of a
+;function at points over a given range. 
 
+;Show how to define factorial in terms of product. 
+;Also use product to compute approximations to PI using the formula:
+;PI/4 = 2/3 * 4/3 * 4/5 * 6/5 * 6/7 * 8/7 ...
+
+;B. If your product procedure generates a recursive process,
+;write one that generates an iterative process. If
+;it generates an iterative process, write one that generates
+;a recursive process.
 
 
 ;Sum - higher order procedure, manipulates procedures
@@ -73,8 +83,4 @@
     (if (cnd a b) ;If stop condition is met 
         result  ;return the result
         (iter (next a) (* result (term a))))) ;Otherwise iterate again, incrementing a and updating the result
-  (iter a 1)) ;Initial starting state a = a, result = 1 (multiplication)
-
-
-  
-  
+  (iter a 1)) ;Initial starting state a = a, result = 1 (multiplication) 
