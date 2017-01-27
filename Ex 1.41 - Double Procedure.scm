@@ -6,7 +6,6 @@
 ;For example, if inc is a procedure that adds 1 to its argument, 
 ;then (double inc) should be a procedure that adds 2. 
 
-
 (define (double f)
   (lambda (x)
     (f (f x))))
