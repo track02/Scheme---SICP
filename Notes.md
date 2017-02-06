@@ -99,3 +99,17 @@ Compound procedures are used in exactly the same way as primitive procedures:
 `> (cube 3)`
 
 `27`
+
+
+##3.2) The Environment Model of Evaluation
+
+A variable must somehow designate a place in which values can be stored, in the environmental model of evaluation these places will be maintained in structures called environments.
+
+An environment is a sequence of frames and each frame is a table of bindings which associate variable names with their corresponding values.
+
+A frame may contain at most one binding for any variable, that is the same variable cannot be bound to two different values.
+Each frame also has a pointer to its enclosing environment, unless the frame is considered to be global.
+
+The value of a variable wrt to an environment is te value given by the binding of said vairable in the first frame in the environment that contains a binding for that variable.
+
+If no frame in the environment sequence specifies a binding for a variable, it is is said to be unbound in the environment.
