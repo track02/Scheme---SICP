@@ -100,6 +100,76 @@ Compound procedures are used in exactly the same way as primitive procedures:
 
 `27`
 
+###1.1.5) The Substitution Model for Procedure Application
+
+Evaluate the body of the procedure with each formal parameter replaced by the corresponding argument.
+
+Using the previously defined cube procedure:
+
+`(define (cube x) (* x x x))`
+
+And applying in to an argument of three:
+
+`(cube 3)`
+
+Would result in, the following evaluation of a combinator.
+The operator is evaluated to determine the procedure to apply to the arguments.
+
+`(* 3 3 3)`
+
+Giving a result of `27`.
+
+If an argument itself is a procedure then it must also be evaluated.
+
+####Applicative Order & Normal Order
+
+Currently we've looked at first evaluating the operator and operands and then applying the resulting procedure to the resulting arguments (Applicative Order Evaluation).
+
+An alternative evaluation model (Normal Order Evaluation) would not evaluate the operands until their values are needed, instead it would substitute operand expressions for paramters until it obtained an expression involving only primitive operators and then would perform the evaluation.
+
+For example, evaluating `(f 5)` this way, where `f` is defined below:
+
+`(define (f a)
+  (sum-of-squares (+ a 1) (* a 2)))`
+
+`(sum-of-squares (+ 5 1) (* 5 2))
+(+ (square (+ 5 1)) (square (* 5 2)) )
+(+ (* (+ 5 1) (+ 5 1)) (* (* 5 2) (* 5 2)))`
+
+`(+ (* 6 6) (* 10 10))
+(+ 36 100)`
+
+`136`
+
+
+If we were to compare this to our original model:
+
+We begin by retrieving the body of f:
+
+`(sum-of-squares (+ a 1) (* a 2))`
+
+Then we replace the formal parameter a by the argument 5:
+
+`(sum-of-squares (+ 5 1) (* 5 2))`
+
+`(+ (square 6) (square 10))`
+
+If we use the definition of square, this reduces to
+
+`(+ (* 6 6) (* 10 10))`
+
+which reduces by multiplication to
+
+`(+ 36 100)`
+
+and finally to
+
+`136`
+
+We get the same result either way but the process differs, Normal Order results in `(+ 5 1)` and `(* 5 2)` being performed twice due to the reduction of the expression `(* x x)`. 
+
+Applicative order evaluation is used by List because of the additional efficients (no multiple evaluations of expressions) and because of the relative simplicity of applicative order evaluation in comparison to normal order evaluation.
+
 
 ##3.2) The Environment Model of Evaluation
 
