@@ -1,10 +1,4 @@
 
-Brief notes for each Chapter/Section.
-
-
-
-
-
 
 ##1.1) Elements of Programming
 
@@ -26,18 +20,20 @@ The interpreter evaluates a given expression and returns the result of the evalu
 `  500`
 
 Expressions may be combined using another expression representing a primitive procedure, this forms a compound expression.
-
-`> (+ 5 10)`
-
-`  15`
-
-`> (* 3 6)`
-
-`  18`
+```scheme
+(+ 5 10)
+```
+`>  15
+```scheme
+(* 3 6)`
+```
+`>  18`
   
-`> (- 10 5 3)`
+```scheme
+(- 10 5 3)
+```
 
-`  2`
+`>  2`
 
 Expressions formed in this manner are called combinations.
 The leftmost element in the list is the operator and the remaining elements are the operands.
