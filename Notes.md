@@ -201,6 +201,8 @@ There is also a restricted conditional that can be used if there are two cases i
 (if {predicate} {consequent} {alternative})
 ```
 
+With an `if` expression, the interpreter starts by evaluating the predicate, if it evaluates to true then `consequent` is evaluated and its value returned otherwise `alternative` is evaluated and its value returned instead.
+
 In addition to primitive predicates such as `<`, `=` and `>` there are also logical composition operations which enable us to construct compound predicates:
 
 ```scheme
@@ -214,8 +216,6 @@ In addition to primitive predicates such as `<`, `=` and `>` there are also logi
 `or` - If any expression evaluates to true the value of the or expression is true and the remaining expressions are not evaluated.
 
 `not` - The value of a not expression is true when the expression `e` is false, and false otherwise.
-
-With an `if` expression, the interpreter starts by evaluating the predicate, if it evaluates to true then `consequent` is evaluated and its value returned otherwise `alternative` is evaluated and its value returned instead.
 
 
 ##3.2) The Environment Model of Evaluation
