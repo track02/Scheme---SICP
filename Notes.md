@@ -132,10 +132,11 @@ For example, evaluating `(f 5)` this way, where `f` is defined below:
 (define (f a)
   (sum-of-squares (+ a 1) (* a 2)))
 ```
+
 ```
 (sum-of-squares (+ 5 1) (* 5 2))
 
-(+ (square (+ 5 1)) (square (* 5 2)) )
+(+ (square (+ 5 1)) (square (* 5 2)))
 
 (+ (* (+ 5 1) (+ 5 1)) (* (* 5 2) (* 5 2)))
 
@@ -184,7 +185,8 @@ Applicative order evaluation is used by List because of the additional efficient
 
 The general form of a conditional expression is as follows:
 
-```(cond ({P1} {E1})
+```
+(cond ({P1} {E1})
          ({P2} {E2})
          ...
          (PN} {EN}))
