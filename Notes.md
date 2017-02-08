@@ -187,9 +187,9 @@ The general form of a conditional expression is as follows:
 
 ```scheme
 (cond ({P1} {E1})
-         ({P2} {E2})
-         ...
-         (PN} {EN}))
+      ({P2} {E2})
+      ...
+      (PN} {EN}))
 ```
 It cosists of the the symbol cond followed by pairs of expressions `({p} {e})` called clauses.
 The first expression in a clause pair is a predicate, it evaluates to either true or false.
@@ -205,7 +205,7 @@ In addition to primitive predicates such as `<`, `=` and `>` there are also logi
 
 ```scheme
 (and {e1} ... {e2})
-(or {e1} ... {e2}) 
+(or  {e1} ... {e2}) 
 (not {e1})
 ```
 
