@@ -15,25 +15,23 @@ There are three key mechanisms for accomplishing this:
 
 The interpreter evaluates a given expression and returns the result of the evaluation.
 
-`> 500`
-
-`  500`
+```scheme
+ 500
+>500
+```
 
 Expressions may be combined using another expression representing a primitive procedure, this forms a compound expression.
+
 ```scheme
 (+ 5 10)
-```
-`>  15
-```scheme
-(* 3 6)`
-```
-`>  18`
-  
-```scheme
-(- 10 5 3)
-```
+>  15
 
-`>  2`
+(* 3 6)
+>  18
+ 
+(- 10 5 3)
+>  2
+```
 
 Expressions formed in this manner are called combinations.
 The leftmost element in the list is the operator and the remaining elements are the operands.
@@ -50,15 +48,14 @@ A name can be used to identify a variable whose value is the object.
 In Scheme, we name objects using `define`.
 Once a name has been associated with a value that value can be referred to by name.
 
-`> (define size 2)`
+```scheme
+(define size 2)
+size
+>  2
 
-`> size`
-
-`  2`
-
-`> (* 5 size)`
-
-`  10`
+(* 5 size)
+>  10`
+```
 
 Associating values with symbols requires that the interpreter maintains some memory in order to keep track of
 the name-object pairings, this memory is known as the global environment.
@@ -84,17 +81,22 @@ Procedure Definition is an abstraction technique in which a compound operation c
 
 The general form of a Procedure Definition is as follows:
 
-`(define (<name> <formal parameters>) <body>)`
+```scheme
+(define (<name> <formal parameters>) <body>)
+```
 
 For example, the compound procedure cube represents the operation of multiplying a value by itself twice:
 
-`(define (cube x) (* x x x))`
+```scheme
+(define (cube x) (* x x x))
+```
 
 Compound procedures are used in exactly the same way as primitive procedures:
 
-`> (cube 3)`
-
-`27`
+```scheme
+(cube 3)
+> 27
+```
 
 ###1.1.5) The Substitution Model for Procedure Application
 
@@ -102,8 +104,9 @@ Evaluate the body of the procedure with each formal parameter replaced by the co
 
 Using the previously defined cube procedure:
 
-`(define (cube x) (* x x x))`
-
+```scheme
+(define (cube x) (* x x x))
+```
 And applying in to an argument of three:
 
 `(cube 3)`
@@ -111,7 +114,9 @@ And applying in to an argument of three:
 Would result in, the following evaluation of a combinator.
 The operator is evaluated to determine the procedure to apply to the arguments.
 
-`(* 3 3 3)`
+```scheme
+(* 3 3 3)
+```
 
 Giving a result of `27`.
 
@@ -124,12 +129,11 @@ Currently we've looked at first evaluating the operator and operands and then ap
 An alternative evaluation model (Normal Order Evaluation) would not evaluate the operands until their values are needed, instead it would substitute operand expressions for paramters until it obtained an expression involving only primitive operators and then would perform the evaluation.
 
 For example, evaluating `(f 5)` this way, where `f` is defined below:
-```
+
+```scheme
 (define (f a)
   (sum-of-squares (+ a 1) (* a 2)))
-```
 
-```
 (sum-of-squares (+ 5 1) (* 5 2))
 
 (+ (square (+ 5 1)) (square (* 5 2)))
@@ -139,32 +143,32 @@ For example, evaluating `(f 5)` this way, where `f` is defined below:
 (+ (* 6 6) (* 10 10))
 (+ 36 100)
 
-136
+> 136
 ```
 
 If we were to compare this to our original model:
 
 We begin by retrieving the body of f:
 
-```
+```scheme
 (sum-of-squares (+ a 1) (* a 2))
 ```
 
 Then we replace the formal parameter a by the argument 5:
 
-```
+```scheme
 (sum-of-squares (+ 5 1) (* 5 2))
 
-(+ (square 6) (square 10))`
+(+ (square 6) (square 10))
 ```
 If we use the definition of square, this reduces to
 
-```
+```scheme
 (+ (* 6 6) (* 10 10))
 ```
 which reduces by multiplication to
 
-```
+```scheme
 (+ 36 100)
 ```
 
@@ -181,7 +185,7 @@ Applicative order evaluation is used by List because of the additional efficient
 
 The general form of a conditional expression is as follows:
 
-```
+```scheme
 (cond ({P1} {E1})
          ({P2} {E2})
          ...
@@ -193,11 +197,13 @@ A conditional expression is evaluated as follows, the first predicate is evaluat
 
 There is also a restricted conditional that can be used if there are two cases in the case analysis, it takes the form of an `if` expression.
 
-`(if {predicate} {consequent} {alternative})`
+```scheme
+(if {predicate} {consequent} {alternative})
+```
 
 In addition to primitive predicates such as `<`, `=` and `>` there are also logical composition operations which enable us to construct compound predicates:
 
-```
+```scheme
 (and {e1} ... {e2})
 (or {e1} ... {e2}) 
 (not {e1})
