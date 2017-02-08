@@ -129,18 +129,18 @@ An alternative evaluation model (Normal Order Evaluation) would not evaluate the
 
 For example, evaluating `(f 5)` this way, where `f` is defined below:
 
-`(define (f a)
+`(define (f a)`
 
-  (sum-of-squares (+ a 1) (* a 2)))`
+  `(sum-of-squares (+ a 1) (* a 2)))`
 
-`(sum-of-squares (+ 5 1) (* 5 2))
+`(sum-of-squares (+ 5 1) (* 5 2))`
 
-(+ (square (+ 5 1)) (square (* 5 2)) )
+`(+ (square (+ 5 1)) (square (* 5 2)) )`
 
-(+ (* (+ 5 1) (+ 5 1)) (* (* 5 2) (* 5 2)))`
+`(+ (* (+ 5 1) (+ 5 1)) (* (* 5 2) (* 5 2)))`
 
-`(+ (* 6 6) (* 10 10))
-(+ 36 100)`
+`(+ (* 6 6) (* 10 10))`
+`(+ 36 100)`
 
 `136`
 
