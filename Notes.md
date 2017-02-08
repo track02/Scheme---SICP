@@ -128,42 +128,48 @@ Currently we've looked at first evaluating the operator and operands and then ap
 An alternative evaluation model (Normal Order Evaluation) would not evaluate the operands until their values are needed, instead it would substitute operand expressions for paramters until it obtained an expression involving only primitive operators and then would perform the evaluation.
 
 For example, evaluating `(f 5)` this way, where `f` is defined below:
+```
+(define (f a)
+  (sum-of-squares (+ a 1) (* a 2)))
+```
+```
+(sum-of-squares (+ 5 1) (* 5 2))
 
-`(define (f a)`
+(+ (square (+ 5 1)) (square (* 5 2)) )
 
-  `(sum-of-squares (+ a 1) (* a 2)))`
+(+ (* (+ 5 1) (+ 5 1)) (* (* 5 2) (* 5 2)))
 
-`(sum-of-squares (+ 5 1) (* 5 2))`
+(+ (* 6 6) (* 10 10))
+(+ 36 100)
 
-`(+ (square (+ 5 1)) (square (* 5 2)) )`
-
-`(+ (* (+ 5 1) (+ 5 1)) (* (* 5 2) (* 5 2)))`
-
-`(+ (* 6 6) (* 10 10))`
-`(+ 36 100)`
-
-`136`
-
+136
+```
 
 If we were to compare this to our original model:
 
 We begin by retrieving the body of f:
 
-`(sum-of-squares (+ a 1) (* a 2))`
+```
+(sum-of-squares (+ a 1) (* a 2))
+```
 
 Then we replace the formal parameter a by the argument 5:
 
-`(sum-of-squares (+ 5 1) (* 5 2))`
+```
+(sum-of-squares (+ 5 1) (* 5 2))
 
-`(+ (square 6) (square 10))`
-
+(+ (square 6) (square 10))`
+```
 If we use the definition of square, this reduces to
 
-`(+ (* 6 6) (* 10 10))`
-
+```
+(+ (* 6 6) (* 10 10))
+```
 which reduces by multiplication to
 
-`(+ 36 100)`
+```
+(+ 36 100)
+```
 
 and finally to
 
@@ -172,6 +178,40 @@ and finally to
 We get the same result either way but the process differs, Normal Order results in `(+ 5 1)` and `(* 5 2)` being performed twice due to the reduction of the expression `(* x x)`. 
 
 Applicative order evaluation is used by List because of the additional efficients (no multiple evaluations of expressions) and because of the relative simplicity of applicative order evaluation in comparison to normal order evaluation.
+
+
+###1.1.6) Conditional Expressions and Predicates
+
+The general form of a conditional expression is as follows:
+
+```(cond ({P1} {E1})
+         ({P2} {E2})
+         ...
+         (PN} {EN}))
+```
+It cosists of the the symbol cond followed by pairs of expressions `({p} {e})` called clauses.
+The first expression in a clause pair is a predicate, it evaluates to either true or false.
+A conditional expression is evaluated as follows, the first predicate is evaluated, if it is false then the second predicate  is evaluated. This process continues until a predicate is found which evaluates to true, the interpreter then returns the value of the corresponding consequent expression `{e}`. If no predicates are found to be true, the value of the cond is undefined.
+
+There is also a restricted conditional that can be used if there are two cases in the case analysis, it takes the form of an `if` expression.
+
+`(if {predicate} {consequent} {alternative})`
+
+In addition to primitive predicates such as `<`, `=` and `>` there are also logical composition operations which enable us to construct compound predicates:
+
+```
+(and {e1} ... {e2})
+(or {e1} ... {e2}) 
+(not {e1})
+```
+
+`and` - If any expression evaluates to false the value of the and expression is false and the remaining expressions are not evaluated.
+
+`or` - If any expression evaluates to true the value of the or expression is true and the remaining expressions are not evaluated.
+
+`not` - The value of a not expression is true when the expression `e` is false, and false otherwise.
+
+With an `if` expression, the interpreter starts by evaluating the predicate, if it evaluates to true then `consequent` is evaluated and its value returned otherwise `alternative` is evaluated and its value returned instead.
 
 
 ##3.2) The Environment Model of Evaluation
