@@ -11,7 +11,7 @@ There are three key mechanisms for accomplishing this:
 - Means of Abstraction, by which compound elements can be named and manipulated as units.
 
 
-###1.1.1) Expressions
+### Expressions
 
 The interpreter evaluates a given expression and returns the result of the evaluation.
 
@@ -41,7 +41,7 @@ values of the operands (arguments).
 
 Placing the operator to the left of it's operands is known as prefix notation.
 
-###1.1.2) Naming and the Evironment
+### Naming and the Evironment
 
 A name can be used to identify a variable whose value is the object.
 
@@ -60,7 +60,7 @@ size
 Associating values with symbols requires that the interpreter maintains some memory in order to keep track of
 the name-object pairings, this memory is known as the global environment.
  
-###1.1.3) Evaluating Combinations
+### Evaluating Combinations
 
 In order to evaluate a combination the following rule is used:
 
@@ -75,7 +75,7 @@ There are exceptions to this rule known as special forms which have their own un
 Instead 'define associates `y` with `4`
 
 
-###1.1.4) Compound Procedures
+### Compound Procedures
 
 Procedure Definition is an abstraction technique in which a compound operation can be named and referred to as a unit.
 
@@ -98,7 +98,7 @@ Compound procedures are used in exactly the same way as primitive procedures:
 > 27
 ```
 
-###1.1.5) The Substitution Model for Procedure Application
+### The Substitution Model for Procedure Application
 
 Evaluate the body of the procedure with each formal parameter replaced by the corresponding argument.
 
@@ -181,7 +181,7 @@ We get the same result either way but the process differs, Normal Order results 
 Applicative order evaluation is used by List because of the additional efficients (no multiple evaluations of expressions) and because of the relative simplicity of applicative order evaluation in comparison to normal order evaluation.
 
 
-###1.1.6) Conditional Expressions and Predicates
+### Conditional Expressions and Predicates
 
 The general form of a conditional expression is as follows:
 
@@ -217,8 +217,33 @@ In addition to primitive predicates such as `<`, `=` and `>` there are also logi
 
 `not` - The value of a not expression is true when the expression `e` is false, and false otherwise.
 
+### Procedures as Black Box Extractions
 
-##3.2) The Environment Model of Evaluation
+Each procedure should accomplied a clearly identifiable task that can be used as a module in the definition of further procedures.
+
+Looking at the following procedure definition:
+
+```scheme
+(define (good-enough? guess x)
+ (< (abs (- (square guess) x)) 0.001))
+```
+
+We are able to define the `square` procedure as a black box, at this moment we are not concerned with how the procedure computes square but just with the fact that it computes square. The inner workings can be considered at a later time.
+
+`square` is not seen as a concrete procedure but rather an abstraction of a procedure or a procedural abstraction. (at the moment its just 'something' that computes the square). 
+
+At this level of abstraction any procedure that computes the square is equally valid meaning that the following two procedures should be indistinguishable.
+
+```scheme
+(define (square x) (* x x))
+(define (square x) (exp (double (log x))))
+(define (double x) (+ x x))
+```
+
+So, a procedure definition should be able to suppress details and allow users of the procedure not to concern themselves with the inner workings and implementations of the procedure, it is just a black box that when given values computes the expected result.
+
+
+## The Environment Model of Evaluation
 
 A variable must somehow designate a place in which values can be stored, in the environmental model of evaluation these places will be maintained in structures called environments.
 
