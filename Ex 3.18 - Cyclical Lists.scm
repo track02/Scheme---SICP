@@ -59,13 +59,11 @@
       ;End conditions
       ((null? h) #f) ;Check if h is at the end of the list
       ((null? (cdr h)) #f) ;Also need to check cdr, as hare jumps two spaces
-      ((eq? h t) #t) ;If hare / tortoise are equal - cycle
+      ((eq? h t) #t) ;If hare / tortoise are equal - cycle (Note: eq? returns true if the address of the two arguments is the same)
       (else (tortoise-and-hare (cdr t) (cddr h)))))
 
   (if (null? input-list) #f
       (tortoise-and-hare input-list (cdr input-list))))
-
-
 
 
 (define looplist (list 'a 'b 'c 'a))
