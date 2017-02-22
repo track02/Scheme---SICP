@@ -264,10 +264,10 @@ Above is a simple environment structure consisting of three frames (I, II and II
 
 C and D both point to the same environment, the variables `z` and `x` are bound in Frame II whilst `y` and `x` are bound in Frame I. The value of `x`in Environment D is 3 the value of `x` with respect to environment B is also 3.
 
-This is determined via:
+This is determined as follows:
 
-- We look at the first frame in the seqence, if no binding for `x` is found we proceed to the enclosing environment D 
-- Now inside D, we find the binding for `x` inside Frame I.
+- We look at the first frame in the seqence, if no binding for the variable is found we proceed to the enclosing environment 
+- If no binding is found we proceed to the next enclosing environment, if there are no further environments no binding exists.
 
 Following these steps, we can tell that the value of `x` in Environment A is 7 because the first frame in the sequence contains a binding of `x` to 7. With respect to environment A, the binding of `x` to 7 in Frame II is said to shadow the binding of `x` to 3 in Frame I.
 
