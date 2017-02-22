@@ -256,7 +256,24 @@ The value of a variable wrt to an environment is te value given by the binding o
 
 If no frame in the environment sequence specifies a binding for a variable, it is is said to be unbound in the environment.
 
-The environment is crucial to the evaluation process as it determines the context in which an expression should be evaluated.
+<div style="text-align:center" markdown="1">
 
 ![Environment 1](/SICP - Images/Environment_Example_1.png)
+
+</div>
+
+Above is a simple environment structure consisting of three frames (I, II and III). The arrows A, B, C and D represent pointers to environments.
+
+C and D both point to the same environment, the variables `z` and `x` are bound in Frame II whilst `y` and `x` are bound in Frame I. The value of `x`in Environment D is 3 the value of `x` with respect to environment B is also 3.
+
+This is determined via:
+
+- We look at the first frame in the seqence, if no binding for `x` is found we proceed to the enclosing environment D 
+- Now inside D, we find the binding for `x` inside Frame I.
+
+Following these steps, we can tell that the value of `x` in Environment A is 7 because the first frame in the sequence contains a binding of `x` to 7. With respect to environment A, the binding of `x` to 7 in Frame II is said to shadow the binding of `x` to 3 in Frame I.
+
+The environment is crucial to the evaluation process as it determines the context in which an expression should be evaluated.
+An expression acquires meaning only with respect to some environment in which it is evaluated.
+
 
