@@ -255,3 +255,8 @@ Each frame also has a pointer to its enclosing environment, unless the frame is 
 The value of a variable wrt to an environment is te value given by the binding of said vairable in the first frame in the environment that contains a binding for that variable.
 
 If no frame in the environment sequence specifies a binding for a variable, it is is said to be unbound in the environment.
+
+The environment is crucial to the evaluation process as it determines the context in which an expression should be evaluated.
+
+![Environment 1](/SICP - Images/Environment_Example_1.png)
+
