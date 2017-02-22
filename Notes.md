@@ -256,11 +256,9 @@ The value of a variable wrt to an environment is te value given by the binding o
 
 If no frame in the environment sequence specifies a binding for a variable, it is is said to be unbound in the environment.
 
-<div style="text-align:center" markdown="1">
 
 ![Environment 1](/SICP - Images/Environment_Example_1.png)
 
-</div>
 
 Above is a simple environment structure consisting of three frames (I, II and III). The arrows A, B, C and D represent pointers to environments.
 
