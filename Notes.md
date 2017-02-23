@@ -275,3 +275,33 @@ The environment is crucial to the evaluation process as it determines the contex
 An expression acquires meaning only with respect to some environment in which it is evaluated.
 
 
+## The Rules of Evaluation
+
+Even when applying the Environmental Model of Evaluation, the method in which the interpreter evaluates a combination remains the same:
+
+- Evaluate the subexpressions of a combination
+- Apply the value of the operator subexpression to the values of the operand subexpressions.
+
+The Environmental Model replaces the Substitution Model in specifying what it means to apply a compound procedure to arguments. In the Environmental Model a procedure is always a pair consisting of some code and a pointer to an environment.
+
+Procedures can only be created by evaluation a λ-expression. This creates a procedure whose code is obtained from the contents (text) of the λ-expression and whose environment is the environment in which the λ-expression itself was evaluated to produce the procedure.
+
+Consider the following procedure definition being evaluated in the global environment.
+
+```scheme
+(define (square x)
+ (* x x))
+```
+
+The procedure definition syntax `(define ...` is just syntactic sugar for an underlying λ-expression, it's equivalent to:
+
+```scheme
+(define square
+ (lambda (x) (* x x)))
+```
+
+Which evaluates `(lambda (x) (* x x))` and binds square to the resulting values, all in the global environment. The figure below illustrates this process:
+
+
+![Environment 1](/SICP - Images/Environment_Example_2.png)
+
