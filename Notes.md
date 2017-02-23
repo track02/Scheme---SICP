@@ -303,5 +303,31 @@ The procedure definition syntax `(define ...` is just syntactic sugar for an und
 Which evaluates `(lambda (x) (* x x))` and binds square to the resulting values, all in the global environment. The figure below illustrates this process:
 
 
-![Environment 1](/SICP - Images/Environment_Example_2.png)
+![Environment 2](/SICP - Images/Environment_Example_2.png)
+
+The procedure object is a pair whose code specifies that the procedure has a single formal parameter `x` and a procedure body `(* x x)`. The environment part of the procedure is a pointer to the global environment since that is where the λ-expression was evaluated to produce the procedure.
+
+A new binding associates the procedure object with the symbol `square` which has been added to the global frame. In general `define` creates definitions by adding bindings to frames.
+
+## Applying Procedures
+
+Under the Environmental Model, to apply a procedure to argument create a new environment containing a frame that binds the parameters to the values of the arguments. The enclosing environment of the frame is the environment specified by the procedure. 
+Within this new evironment the procedure body is evaluated.
+
+Below is illustration showing the environment structure created by evaluating `(square 5)` in the global environment, where `square` is the procedure generated in the previous section.
+
+![Environment 3](/SICP - Images/Environment_Example_3.png)
+
+Applying the procedure results in the creation of a new environment (E1) that begins with a frame in which `x` the formal parameter for the procedure is bound to the argument `5`. The pointer leading from the frame shows that the enclosing environment for the frame is the global environment.  The global environment is chosen here as this is the environment that is indicated as part of the `square` procedure object.
+
+Within E1 the body of the procedures `(* x x)` is evaluated and because `x` is bound to `5` the result is `(* 5 5)` or `25`.
+
+So, the environmental model of procedure application can be summed up as foolows:
+
+- A procedure object is applied to a set of arguments be constructing a frame, binding the formal parameters of the procedure to the arguments of the call and then evaluating the body of the procedure in the context of the new environment constructed. The new frame has as its enclosing environment the environment part of the procedure object being applied.
+
+- A procedure is created through the evaluation of a λ-expression relative to a given environment. This results in a procedure object which is a pair consisting of the text of the λ-expression and a pointer to the environment in which the procedure was created.
+
+We also specify that defining a symbol using `define` creates a binding in the current environment frame and assigns to the symbol the indicated value. Lastly we'll look at `set!`, evaluating the expressions `(set! {var} {value})` in some environment locates the binding of the variable in the environment and changes the binding to indicate the new value. That is, the first frame in the environment which contains the binding is located and modified. If the variable is not bound then `set!` will return an error.
+
 
