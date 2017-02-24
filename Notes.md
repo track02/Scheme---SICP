@@ -370,7 +370,7 @@ Below is the resulting environments created by evaluating `(f 5)`.
 
 ![Environment 5](/SICP - Images/Environment_Example_5.png)
 
-Note how each call to `square`  generates a new environment containing a binding for `x`. This demonstrates how the different frames serve to keep seperate differing local variables all named `x`. 
+Note how each call to `square`  generates a new environment containing a binding for `x`. This demonstrates how the different frames serve to keep separate differing local variables all named `x`. 
 
 Each frame created by `square` points back to the global environment as this is the environment indicated by the `square` procedure object.
 
