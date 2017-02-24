@@ -330,4 +330,45 @@ So, the environmental model of procedure application can be summed up as foolows
 
 We also specify that defining a symbol using `define` creates a binding in the current environment frame and assigns to the symbol the indicated value. Lastly we'll look at `set!`, evaluating the expressions `(set! {var} {value})` in some environment locates the binding of the variable in the environment and changes the binding to indicate the new value. That is, the first frame in the environment which contains the binding is located and modified. If the variable is not bound then `set!` will return an error.
 
+## Applying Procedures - Example
+
+Lets take a look at evaluating the following example under the Environmental Model.
+
+```scheme
+(define (square x)
+ (* x x))
+(define (sum-of-squares x y)
+ (+ (square x) (square y)))
+(define (f a)
+ (sum-of-squares (+ a 1) (* a 2)))
+```
+
+Here we have three procedure objects created by evaluating the definitions of `square`, `f` and `sum-of-squares` in the global environment. As we know each procedure object is a pair consisting of a pointer and a body of code.
+
+The call to `f` creates a new environment E1 beginning with a frame in which `a` (the formal parameter of `f`) is bound to the argument `5`. We then evaluate the body of `f`
+
+`(sum-of-squares (+ a 1) (* a 2)))`
+
+To evaluate this combination we first evaluate the subexpressions, the first is `sum-of-squares` which has a value that is a procedure object. 
+
+We find this value by looking in the first frame of E1 which contains no binding for `sum-of-squares`, then we proceed up to the enclosing environment (global) and find a binding for `sum-of-squares`. 
+
+The other two subexpressions are evaluated by applying the primitive operations `+` and `*` to evaluate the combinations `(+ a 1)` and `(* a 2)` giving the results of `6` and `10`.
+
+Now we apply the procedure object `sum-of-squares` to the arguments `6` and `10`. This creates a new environment E2 in which the formal parameters of `sum-of-squares`, `x` and `y` are bound to the arguments `6` and `10`.  
+
+Within E2 we then evaluate the combination `(+ (square x) (square y)))` this leads us to evaluate `(square x)` where square is found to be a procedure object in the global frame and `x` is `6`. So, we set up another environment E3 in which `x` is bound to `6` and the body of `square` is evaluated `(* x x)`. 
+
+We must also evaluate `(square y)` where `y` is `10` this second call to `square` creates another environment E4 in which `x` is bound to `10` and within E4 we evaluate `(* x x)`.
+
+
+![Environment 4](/SICP - Images/Environment_Example_4.png)
+
+Above shows the procedure objects in the global frame which result from evaluating the `define` expressions.
+
+Below is the resulting environments created by evaluating `(f 5)`.
+
+![Environment 5](/SICP - Images/Environment_Example_5.png)
+
+
 
