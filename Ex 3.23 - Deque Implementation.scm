@@ -102,8 +102,8 @@
                (set-front-ptr! new-pair)
                (set-rear-ptr!  new-pair))
               (else ;Otherwise set the cdr of the rear-ptr to the new-pair and point the rear-ptr to the item
-               (set-cdr! (car new-pair) rear-ptr) ;Update the new item front to equal current rear
-               (set-cdr! rear-ptr new-pair) ;Update the current rear to point to the new item
+               (set-cdr! new-pair rear-ptr) ;Update the new item front to equal current rear
+               (set-cdr! (car rear-ptr) new-pair) ;Update the current rear to point to the new item
                (set-rear-ptr! new-pair))))) ;Set rear-ptr to point to the new item
 
 
@@ -114,8 +114,8 @@
                (set-front-ptr! new-pair)
                (set-rear-ptr!  new-pair))
               (else ;Otherwise set the cdr of the new-pair to the current front-ptr and point the front-ptr to the item
-               (set-cdr! (car front-ptr) new-pair) ;Update the current front to point to the new item
-               (set-cdr! new-pair front-ptr) ;Update the new item rear to point to the current front
+               (set-cdr! front-ptr new-pair) ;Update the current front to point to the new item
+               (set-cdr! (car new-pair) front-ptr) ;Update the new item rear to point to the current front
                (set-front-ptr! new-pair))))) ;Update the current front pointer to the new item
 
     
@@ -125,27 +125,29 @@
       (define (iter input output)
         (if (null? input)
             output
-            (iter (cdr input) (append (list (car (car input))) output)))) ;Attach element to start of list
-      (iter front-ptr '()))
+            (iter (cdr input) (append output (list (car (car input))))))) ;Attach element to start of list
+      (iter rear-ptr '()))
 
     ;Delete item - removes an item from the front
     (define (front-delete-deque!)
       (cond ((empty-deque?)
              (error "DELETE! called with an empty queue"))
-            (else (set-front-ptr! (cdr (cdr front-ptr))) ;Set the front pointer to the rear of the current front 
-                  (set-car! front-ptr '())))) ;Set the front of current front to null
+            (else (set-front-ptr! (cdr (car front-ptr))) ;Set the front pointer to the rear of the current front 
+                  (set-cdr! front-ptr '())))) ;Set the front of current front to null
 
     ;Delete item - removes an item from the back
     (define (rear-delete-deque!)
       (cond ((empty-deque?)
              (error "DELETE! called with an empty queue"))
-            (else (set-rear-ptr! (cdr front-ptr)))))
+            (else (set-rear-ptr! (cdr rear-ptr))
+                  (set-cdr! (car rear-ptr) '())))) ;Null behind
            
     (define (dispatch m)
       (cond ((eq? m 'empty-deque?) (empty-deque?))
             ((eq? m 'front-deque) front-ptr)
             ((eq? m 'rear-deque) rear-ptr)
             ((eq? m 'rear-insert-deque!)  rear-insert-deque!)
+            ((eq? m 'rear-delete-deque!) (rear-delete-deque!))
             ((eq? m 'front-insert-deque!) front-insert-deque!)
             ((eq? m 'front-delete-deque!) (front-delete-deque!))
             ((eq? m 'print) (print-queue))
@@ -161,6 +163,11 @@
 ((q 'rear-insert-deque!) 2)
 ((q 'front-insert-deque!) 3)
 ((q 'rear-insert-deque!) 4)
-(q 'print)
+(q 'print) ;4213
+
+(q 'front-delete-deque!)
+(q 'print) ;421
+(q 'rear-delete-deque!)
+(q 'print) ;21
 
 
