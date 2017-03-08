@@ -9,15 +9,14 @@
   (lambda (x)
     (f(g x))))
 
-;Test compose by calling the following 
-;((compose square inc) 6)
-
-
 (define (square x)
   (* x x))
 
 (define (inc x)
   (+ x 1))
+
+;Test compose by calling the following 
+;((compose square inc) 6)
 
 ;> ((compose square inc) 6)
 ;49
