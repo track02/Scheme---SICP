@@ -5,7 +5,6 @@
 ;Making use of fixed-point, average-damp and repeated procedures
 ;Assuming any arithmetic operations are available as primitives
 
-
 ;Finding roots of equations via the half-interval method
 ;Root of f is an x value such that f(x) = 0, where f is a continuous function
 ;If given points a and b such that f(a) < 0 < 0 f(b)
@@ -110,4 +109,3 @@
 (define (compose f g)
   (lambda (x)
     (f(g x))))
-
