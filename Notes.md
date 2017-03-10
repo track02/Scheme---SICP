@@ -191,7 +191,7 @@ The general form of a conditional expression is as follows:
       ...
       (PN} {EN}))
 ```
-It cosists of the the symbol cond followed by pairs of expressions `({p} {e})` called clauses.
+It consists of the the symbol cond followed by pairs of expressions `({p} {e})` called clauses.
 The first expression in a clause pair is a predicate, it evaluates to either true or false.
 A conditional expression is evaluated as follows, the first predicate is evaluated, if it is false then the second predicate  is evaluated. This process continues until a predicate is found which evaluates to true, the interpreter then returns the value of the corresponding consequent expression `{e}`. If no predicates are found to be true, the value of the cond is undefined.
 
