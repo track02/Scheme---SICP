@@ -411,6 +411,6 @@ This causes a new procedure object to be constructed whose body is specified by 
 
 The resulting procedure object is returned and bound to `W1` in the global environment as this is where the `define` is being evaluated `(define W1 (make-withdraw 100))`. 
 
-`W1` is bound to the result of evaluating `(make-withdraw 100)` and `make-withdraw` itself evaluates to a procedure object due to the λ-expression within its body. As `make-withdraw` is evaluated in a new environment `E1` the resulting procedure object points to this environment. This resulting procedure object is the returned back to the global environment and bount to `W1`.
+`W1` is bound to the result of evaluating `(make-withdraw 100)` and `make-withdraw` itself evaluates to a procedure object due to the λ-expression within its body. As `make-withdraw` is evaluated in a new environment `E1` the resulting procedure object points to this environment. This resulting procedure object is then returned back to the global environment and bount to `W1`.
 
 
