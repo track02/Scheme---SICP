@@ -1,6 +1,6 @@
 
 
-##Elements of Programming
+## Elements of Programming
 
 A programming language serves as a framework in which to organise ideas about processes 
 and offers the means to combine simple ideas in order to form more complex ideas.
@@ -257,7 +257,7 @@ The value of a variable wrt to an environment is te value given by the binding o
 If no frame in the environment sequence specifies a binding for a variable, it is is said to be unbound in the environment.
 
 
-![Environment 1](/SICP - Images/Environment_Example_1.png)
+![Environment 1](https://github.com/track02/Scheme---SICP/blob/master/SICP%20-%20Images/Environment_Example_1.png)
 
 
 Above is a simple environment structure consisting of three frames (I, II and III). The arrows A, B, C and D represent pointers to environments.
@@ -303,7 +303,7 @@ The procedure definition syntax `(define ...` is just syntactic sugar for an und
 Which evaluates `(lambda (x) (* x x))` and binds square to the resulting values, all in the global environment. The figure below illustrates this process:
 
 
-![Environment 2](/SICP - Images/Environment_Example_2.png)
+![Environment 2](https://github.com/track02/Scheme---SICP/blob/master/SICP%20-%20Images/Environment_Example_2.png)
 
 The procedure object is a pair whose code specifies that the procedure has a single formal parameter `x` and a procedure body `(* x x)`. The environment part of the procedure is a pointer to the global environment since that is where the λ-expression was evaluated to produce the procedure.
 
@@ -316,7 +316,7 @@ Within this new evironment the procedure body is evaluated.
 
 Below is illustration showing the environment structure created by evaluating `(square 5)` in the global environment, where `square` is the procedure generated in the previous section.
 
-![Environment 3](/SICP - Images/Environment_Example_3.png)
+![Environment 3](https://github.com/track02/Scheme---SICP/blob/master/SICP%20-%20Images/Environment_Example_3.png)
 
 Applying the procedure results in the creation of a new environment (E1) that begins with a frame in which `x` the formal parameter for the procedure is bound to the argument `5`. The pointer leading from the frame shows that the enclosing environment for the frame is the global environment.  The global environment is chosen here as this is the environment that is indicated as part of the `square` procedure object.
 
@@ -362,13 +362,13 @@ Within E2 we then evaluate the combination `(+ (square x) (square y)))` this lea
 We must also evaluate `(square y)` where `y` is `10` this second call to `square` creates another environment E4 in which `x` is bound to `10` and within E4 we evaluate `(* x x)`.
 
 
-![Environment 4](/SICP - Images/Environment_Example_4.png)
+![Environment 4](https://github.com/track02/Scheme---SICP/blob/master/SICP%20-%20Images/Environment_Example_4.png)
 
 Above shows the procedure objects in the global frame which result from evaluating the `define` expressions.
 
 Below is the resulting environments created by evaluating `(f 5)`.
 
-![Environment 5](/SICP - Images/Environment_Example_5.png)
+![Environment 5](https://github.com/track02/Scheme---SICP/blob/master/SICP%20-%20Images/Environment_Example_5.png)
 
 Note how each call to `square`  generates a new environment containing a binding for `x`. This demonstrates how the different frames serve to keep separate differing local variables all named `x`. 
 
