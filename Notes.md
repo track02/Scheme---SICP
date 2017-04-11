@@ -122,7 +122,7 @@ Giving a result of `27`.
 
 If an argument itself is a procedure then it must also be evaluated.
 
-####Applicative Order & Normal Order
+#### Applicative Order & Normal Order
 
 Currently we've looked at first evaluating the operator and operands and then applying the resulting procedure to the resulting arguments (Applicative Order Evaluation).
 
