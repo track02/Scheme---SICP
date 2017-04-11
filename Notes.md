@@ -411,6 +411,43 @@ This causes a new procedure object to be constructed whose body is specified by 
 
 The resulting procedure object is returned and bound to `W1` in the global environment as this is where the `define` is being evaluated `(define W1 (make-withdraw 100))`. 
 
-`W1` is bound to the result of evaluating `(make-withdraw 100)` and `make-withdraw` itself evaluates to a procedure object due to the λ-expression within its body. As `make-withdraw` is evaluated in a new environment `E1` the resulting procedure object points to this environment. This resulting procedure object is then returned back to the global environment and bount to `W1`.
+`W1` is bound to the result of evaluating `(make-withdraw 100)` and `make-withdraw` itself evaluates to a procedure object due to the λ-expression within its body. As `make-withdraw` is evaluated in a new environment `E1` the resulting procedure object points to this environment. This resulting procedure object is then returned back to the global environment and bound to `W1`.
 
+Now `W1` has been bound, lets see what happens what `W1` is applied to an argument. 
 
+```scheme
+(W1 50)
+50
+```
+
+We start by constructing a new frame in which `amount`, the formal parameter of `W1` is bound to the provided argument of `50`. Note that this frame has as its enclosing environment the environment `E1` because this is the environment that is specified by the `W1` procedure object. Within this new environment we evaluate the body of the procedure:
+
+```scheme
+(if (>= balance amount)
+(begin (set! balance (- balance amount))
+balance)
+"Insufficient funds")
+```
+
+![Environment 8](https://github.com/track02/Scheme---SICP/blob/master/SICP%20-%20Images/Environment_Example_8.png)
+
+The expression references both `amount` and `balance`, `amount` will be found in the first frame in the environment (its a parameter) whilst `balance` is located in the enclosing environment `E1` which is arrived at by following the pointer.
+
+When `set!` is executed the binding of `balance` in `E1` is changed. And at the completion of the call to `W1`, `balance` is equal to `50` and the frame that contains `balance` is still pointed to by the procedure object `W1`. The frame used to bind `amount` is no longer relevant as the procedure call is now terminated and there exist no pointers to that frame from other parts of the environment. So, when `W1` is called again it will build a new frame with `E1` as the enclosing environment.  
+
+Below is a diagram showing the remaining environments after the call to `W1` completes.
+
+![Environment 9](https://github.com/track02/Scheme---SICP/blob/master/SICP%20-%20Images/Environment_Example_9.png)
+
+We've seen that `E1` serves as the place that holds the local state variable for the procedure object `W1`.
+Now we'll look at creating a second withdraw object `W2` via another call to `make-withdraw`
+
+```scheme
+(define W2 (make-withdraw 100))
+```
+
+![Environment 9](https://github.com/track02/Scheme---SICP/blob/master/SICP%20-%20Images/Environment_Example_10.png)
+
+This produces a new environment for `W2`, `E2` which contains a frame with its own local binding for `balance`. Even though `W1` and `W2` have the same code (specified by the λ-expression in the body of make-withdraw) its clear why they behave as independent objects.
+
+A call to `W1` will reference the `balance` variable stored in `E1` whilst a call to `W2` references the `balance` variable stored in `E2`. So the change to the local state of one object has no effect on another.
