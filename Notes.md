@@ -451,3 +451,54 @@ Now we'll look at creating a second withdraw object `W2` via another call to `ma
 This produces a new environment for `W2`, `E2` which contains a frame with its own local binding for `balance`. Even though `W1` and `W2` have the same code (specified by the λ-expression in the body of make-withdraw) its clear why they behave as independent objects.
 
 A call to `W1` will reference the `balance` variable stored in `E1` whilst a call to `W2` references the `balance` variable stored in `E2`. So the change to the local state of one object has no effect on another.
+
+
+## Internal Definitions
+
+We know that procedures can contain internal definitions which allows for the use of block structure. Now, we'll examine how internal definitions behave under the environmental model.
+
+Lets look at the follow square root function:
+
+```scheme
+(define (sqrt x)
+(define (good-enough? guess)
+(< (abs (- (square guess) x)) 0.001))
+(define (improve guess)
+(average guess (/ x guess)))
+(define (sqrt-iter guess)
+(if (good-enough? guess)
+guess
+(sqrt-iter (improve guess))))
+(sqrt-iter 1.0))
+```
+
+And the evaluation of the expression `(sqrt 2)`
+
+We know that `sqrt` is a symbol in the global environment that is bound to a procedure object whose associated environment is the global environment. 
+
+When `sqrt` was called a new environment `E1` was formed which was subordinate to the global environment. Inside this environment we bind the parameter `x` to the value `2`. The body of `sqrt` is the evaluated inside `E1`. 
+
+The first expression in the body of `sqrt` is as follows:
+
+```scheme
+(define (good-enough? guess)
+(< (abs (- (square guess) x)) 0.001))
+```
+
+Evaluating this expression causes results in the definition of the procedure `good-enough?` inside the environment `E1`. So, the symbol `good-enough?` is added to the first frame of `E1` and bound to a procedure object whose associated environment is `E1`. The same process would also occur for the definitions of `improve` and `sqrt-iter`.
+
+After the local procedures were defined the expression `(sqrt-iter 1.0)` was evaluated, remember we are still inside the `E1` environment. This results in the procedure object bound to `sqrt-iter` is called with `1` as an argument.
+
+This creates another environment `E2` in which `guess` the parameter of `sqrt-iter` is bound to 1. `sqrt-iter` in turn calls `good-enough?` with the value of guess (bound in `E2`) as the argument for `good-enough?`.
+
+This sets up another environment `E3` in which `guess` (the parameter of `good-enough?`) is bound to 1. Note that although `sqrt-iter` and `good-enough?` both have a parameter names `guess` these are two distinct local variables located in different frames.
+
+`E2` and `E3` both have `E1` as their enclosing environment, because `sqrt-iter` and `good-enough?` both have `E1` as their associated environment (they were evaluated from `E1`). One consequence of this is that the `x` in the body of `good-enough?` will reference the binding of `x` that appears in `E1` which was created when `sqrt` was called.
+
+The environment model explains two key properties:
+
+- The names of the local procedures do not interfere with names external to the enclosing procedure because the local procedure names are bound in the frame that the procedure creates when it is run, rather than being bound in the global environment. In the above example this is shown when guess and good-enough are evaluated from `E1`
+
+- Local procedures can access the arguments of the enclosing procedure, by using parameter names as free variables. This is because the bod of the local procedure is evaluated in an environment that is subordinate to the evaluation environment for the enclosing procedure.
+
+![Environment 11](https://github.com/track02/Scheme---SICP/blob/master/SICP%20-%20Images/Environment_Example_11.png)
