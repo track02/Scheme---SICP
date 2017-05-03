@@ -29,8 +29,6 @@
 ;par2 divides an intervals by the sum of two intervals (2)
 
 
-
-
 ;Interval constructor / selectors (+ center variants)
 (define (make-interval a b) (cons a b))
 
