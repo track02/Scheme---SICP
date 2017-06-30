@@ -1,6 +1,6 @@
 #lang scheme
 
-;Ex 2.58 (b) - Modify the program to allow differentiation of expresions presentd in standard algebraic notation
+;Ex 2.58 (b) - Modify the program to allow differentiation of expresions presented in standard algebraic notation
 ;(x + 3 * (x + y + 2))
 ;This notation drops unnecessary parenthese and assumes multiplication is performed before addition
 
