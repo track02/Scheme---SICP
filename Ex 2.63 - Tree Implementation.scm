@@ -1,6 +1,5 @@
 #lang scheme
 
-
 ;Implementation for a tree structure - a tree has 3 parts, entry, left branch and right branch
 
 ;Entry is the value of the node
@@ -75,8 +74,6 @@
 
 ;First procedure uses append which will iterate over all elements in the given list -> O(nlogn)
 ;Second procedure only relies on cons which is a single operation -> O(n)
-
-
 
 (define (tree->list-1 tree)
   (if (null? tree)
