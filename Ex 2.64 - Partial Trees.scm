@@ -46,7 +46,6 @@
 
 ;Trace this through with a simple list as an example e.g. (1 3 5)
 
-
 ;> (list->tree '(1 3 5 7 9 11))
 ;(5 (1 () (3 () ())) (9 (7 () ()) (11 () ())))
 
@@ -62,4 +61,3 @@
 
 ;b) What is the order of growth in the number of steps required by list->tree
 ; to convert a list of nelements? O(n) - each element is visited just once
-
