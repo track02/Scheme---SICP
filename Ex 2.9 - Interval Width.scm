@@ -1,5 +1,6 @@
 #lang scheme
 
+;Ex 2.9
 ;The width  of an interval is half of the difference between its upper and lower bounds.
 ;The width is a measure of the uncertainty of the number specified by the interval.
 ;For some arithmetic operations the width of the result of combining two intervals
