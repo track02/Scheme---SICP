@@ -8,7 +8,7 @@
 ;numbers and rational numbers. 
 
 
-;We'llneed to update the underlying rectangular / polar packages to work with any type of number
+;We'll need to update the underlying rectangular / polar packages to work with any type of number
 
 ;This requires we introduce new generic operations:
 ;square-root
