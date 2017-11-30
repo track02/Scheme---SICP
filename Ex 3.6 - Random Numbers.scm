@@ -7,7 +7,7 @@
 ;that is either the symbol generate or the symbol
 ;reset and behaves as follows:
 
-;(rand 'generate) producesa new random number
+;(rand 'generate) produces a new random number
 ; ((rand 'reset) ⟨new-value ⟩) resets the internal state variable to the designated ⟨new-value ⟩.
 
 ;Thus, by resetting the state, one can generate repeatable sequences.
