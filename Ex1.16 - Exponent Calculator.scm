@@ -3,8 +3,6 @@
 ; To reduce steps required for even exponents down to
 ; O(log(n))
 
-
-
 #lang racket
 (define (exp-finder b n)
 
@@ -32,6 +30,3 @@
 (define (start-find b n)
 (cond ((even n) (start-find (* b b) (/ n 2)))
 (else (exp-iter 1 b n))))
-
-
-
