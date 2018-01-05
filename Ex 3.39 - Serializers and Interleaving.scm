@@ -6,18 +6,18 @@
 (define x 10)
 (define s (make-serializer))
 (parallel-execute
-(lambda () (set! x ((s (lambda () (* x x))))))
-(s (lambda () (set! x (+ x 1)))))
+(lambda () (set! x ((s (lambda () (* x x)))))) ;P1
+(s (lambda () (set! x (+ x 1))))) ;P2
 
-; Atomic / Serial Procedures - no interleaving may occur during their execution
-; [S +] = [set! x [+ x 1]]
-; [*] = [* x x] 
-; Non-Serial Procedures
-; (S) = (set! x ...)
 
-; This results in three possible combinations
-; Interleaving is possible between the Set operation not enclosed in a serializer
-; (S [S +] [*]) -> 100
-; [S +] (S [*]) -> 121
-; (S [*]) [S +] -> 101
+; Interleaving Code
+;P11 - Read two values of x
+;P12 - Set value of x
+;P2  - Read x, add 1 and set
+
+; Possible values
+; P11(10) P12(100) P2(100->101) = 101 
+; P2(10->11) P11(11) P12(11->121) = 121
+; P11(10) P2(10->11) P12(11->100) = 100
+
 
