@@ -14,6 +14,34 @@
 ; b. in terms of atomic test-and-set! operations.
 
 
+; a
+
+    (define (make-semaphore proc)
+      (let ((processes proc)
+            (cell (list false)))
+        (define (the-semaphore m)
+          (cond ((eq? m 'acquire)
+                 (if (test-and-set! cell) ; Try and set the cell
+                     (if (processes > 0) ; Space for semaphore to be acquired
+                         (begin
+                           (set! processes (- processes 1))
+                           (clear! cell))
+                         (begin ;Else no space available
+                           (clear! cell)
+                           (the-semaphore 'acquire)))) ;Try acquiring again
+                 (the-semaphore 'acquire)) ;; Cell occupied - try acquiring again
+                
+                ((eq? m 'release) ; When asked to release
+                 (if (test-and-set! cell) ; Acquire cell to lock operation
+                     (begin
+                       (set! processes (+ processes 1)) ; update process space
+                       (clear! cell)) ; Release mutex
+                     (the-semaphore 'release)))))) ; Cell is in use - retry release
+      
+          
+        the-semaphore)
+
+; b
 
     (define (make-semaphore proc)
       (let ((processes proc)
