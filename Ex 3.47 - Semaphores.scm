@@ -22,24 +22,22 @@
         (define (the-semaphore m)
           (cond ((eq? m 'acquire)
                  (if (test-and-set! cell) ; Try and set the cell
+                     (the-semaphore 'acquire) ;Retry until true
                      (if (processes > 0) ; Space for semaphore to be acquired
-                         (begin
+                         (begin 
                            (set! processes (- processes 1))
                            (clear! cell))
-                         (begin ;Else no space available
-                           (clear! cell)
-                           (the-semaphore 'acquire)))) ;Try acquiring again
-                 (the-semaphore 'acquire)) ;; Cell occupied - try acquiring again
+                         (begin ;Else no space available, release cell
+                           (clear! cell)))))
                 
                 ((eq? m 'release) ; When asked to release
                  (if (test-and-set! cell) ; Acquire cell to lock operation
+                     (the-semaphore 'release) ;Retry until true
                      (begin
                        (set! processes (+ processes 1)) ; update process space
-                       (clear! cell)) ; Release mutex
-                     (the-semaphore 'release)))))) ; Cell is in use - retry release
-      
+                       (clear! cell)))))) ; Release cell                  
           
-        the-semaphore)
+        the-semaphore))
 
 ; b
 
