@@ -13,4 +13,6 @@
 
 ; Acquiring resources in order of lowest-id to highest will not be suitable
 ; if we only know the resources to be modified once acquiring the lock
+; and if the order of operation execution is important
+; I.E it may not be possible to modify a1 first in the exchange
 ; E.g. - Database modifications
